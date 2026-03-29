@@ -11,7 +11,7 @@
 
 3. **Execute tasks sequentially.** For each unchecked task:
    - Announce: `> Building: {task description}`
-   - Implement the task. Use TDD when appropriate via `superpowers:test-driven-development` (write test, make it pass, refactor). If tests fail repeatedly, switch to `/flow:debug` to investigate systematically.
+   - Implement the task. Use TDD when appropriate (write test, make it pass, refactor). If tests fail repeatedly, switch to `/flow:debug` to investigate systematically.
    - Mark the task `- [x]` in `.flow/STATE.md`.
    - **Commit checkpoint:** After completing each task (or when changed files pile up), ask:
      > Checkpoint — commit these changes? Suggest a descriptive message summarizing what was built.

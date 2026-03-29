@@ -20,19 +20,29 @@ If the user prefers free-form work without planning, suggest `/flow:vibe` as an 
 
 Wait for answer before continuing.
 
-### 3. Brainstorm the design
+### 3. Research (if needed)
 
-**REQUIRED SUB-SKILL:** Use superpowers:brainstorming to explore the idea.
+Follow `~/.claude/flow/workflows/research.md`.
 
-- Ask questions one at a time
-- Propose 2-3 approaches with trade-offs
-- Get user approval on the design before proceeding
+Investigate the domain — ecosystem, prior art, codebase context, constraints. Skip if the task is well-understood and doesn't need investigation (simple bug fix, UI tweak, etc.). When in doubt, ask:
+> This seems straightforward — skip research and go straight to design?
+
+Research findings are saved to `.flow/plans/{phase-name}-research.md`.
+
+### 4. Brainstorm the design
+
+Follow `~/.claude/flow/workflows/brainstorm.md`.
+
+Explore the idea collaboratively — clarify goals, propose 2-3 approaches with trade-offs, refine with the user, lock a design direction. Get explicit approval before writing the plan.
 
 **Checkpoint:** Confirm the user approves the design direction before writing the plan file. If context is lost, the brainstorm notes in conversation history serve as recovery.
 
-### 4. Write the implementation plan
+### 5. Write the implementation plan
 
-**REQUIRED SUB-SKILL:** Use superpowers:writing-plans to create the plan.
+Break the approved design into a sequenced task checklist. Each task should be:
+- Small enough to complete and commit in one step
+- Specific enough that success is obvious
+- Ordered by dependency (foundations first)
 
 Save to `.flow/plans/{phase-name}.md` using checklist format:
 
@@ -45,7 +55,7 @@ Save to `.flow/plans/{phase-name}.md` using checklist format:
 ...
 ```
 
-### 5. Update STATE.md
+### 6. Update STATE.md
 
 Copy the task checklist into `### Plan` under the current phase. Clear `### Vibed`.
 
@@ -57,7 +67,7 @@ Copy the task checklist into `### Plan` under the current phase. Clear `### Vibe
 ### Vibed
 ```
 
-### 6. Hand off
+### 7. Hand off
 
 Tell the user:
 > "Plan saved. Click Build or `/flow:build` when ready."

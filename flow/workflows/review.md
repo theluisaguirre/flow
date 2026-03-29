@@ -16,7 +16,7 @@
    If tasks are missing, ask:
    > {N} planned tasks incomplete. Skip them and proceed, or go back to Build?
 
-4. **Stage 2 — Code quality.** REQUIRED SUB-SKILL: `superpowers:verification-before-completion`. Run tests, verify the build compiles cleanly, and check for obvious issues (dead code, missing error handling, broken imports).
+4. **Stage 2 — Code quality.** Run tests, verify the build compiles cleanly, and check for obvious issues (dead code, missing error handling, broken imports). Confirm output of each verification command before reporting results.
 
 5. **Summary report.** Print:
    ```
