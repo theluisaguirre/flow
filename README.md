@@ -62,10 +62,18 @@ Run `/flow:pause` before ending a session. Flow writes a handoff note to STATE.m
 ### One Command (recommended)
 
 ```bash
-npx flow-dev@latest
+npx github:theluisaguirre/flow
 ```
 
 This copies Flow commands and workflows to `~/.claude/` and registers a startup hook.
+
+### Update
+
+Run the same command again — it overwrites with the latest version.
+
+```bash
+npx github:theluisaguirre/flow
+```
 
 ### Manual / Dev Install
 
@@ -78,7 +86,7 @@ node bin/install.js
 ### Uninstall
 
 ```bash
-npx flow-dev --uninstall
+npx github:theluisaguirre/flow --uninstall
 ```
 
 ---
