@@ -1,0 +1,38 @@
+{
+  "name": "flow-dev",
+  "version": "1.0.0",
+  "description": "Git-native development workflow for Claude Code. Lightweight state tracking with first-class vibe mode.",
+  "author": {
+    "name": "Luis Aguirre",
+    "url": "https://github.com/theluisaguirre"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theluisaguirre/flow"
+  },
+  "homepage": "https://github.com/theluisaguirre/flow",
+  "bugs": "https://github.com/theluisaguirre/flow/issues",
+  "keywords": [
+    "claude-code",
+    "workflow",
+    "development",
+    "git",
+    "vibe-coding",
+    "ai",
+    "developer-tools",
+    "state-tracking"
+  ],
+  "bin": {
+    "flow-dev": "bin/install.js"
+  },
+  "files": [
+    "bin",
+    "commands",
+    "flow",
+    "hooks"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}
