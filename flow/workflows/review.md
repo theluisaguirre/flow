@@ -1,5 +1,16 @@
 # Flow Review
 
+## Contract
+
+**Triggers:** "review this", "is it ready", "check the work", or after all build tasks are complete.
+**Inputs:** `.flow/STATE.md` with plan tasks and/or vibed entries. Git history since phase start.
+**Outputs:** Review summary to stdout — planned vs built count, test results, build status, issue list, and pass/fail verdict. Mode set to `review`.
+**Edge cases:**
+- No test command exists for this project → skip test step, note "no test runner detected" in summary
+- No build command exists → skip build step, note "no build step detected"
+- Vibed entries exist but no plan → review is vibed-only, skip spec compliance stage
+- Structural issues detected (orphaned files, state inconsistencies) → suggest `/flow:cleanup` before shipping
+
 ## Steps
 
 1. **Enter Review mode.** Update `.flow/STATE.md` header to `## Current: Phase {N} — {name} (review mode)`.

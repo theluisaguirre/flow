@@ -1,5 +1,17 @@
 # Ship
 
+## Contract
+
+**Triggers:** "ship it", "push this", "create a PR", "we're done", or after review passes.
+**Inputs:** `.flow/STATE.md` with current phase. Git repo with committed work.
+**Outputs:** Git commit (if uncommitted changes), push to remote, PR via `gh pr create` (if on feature branch). Phase marked complete in ROADMAP.md. Plan archived to `.flow/done/`. Git tag `flow-phase-{N}-shipped` created as safety checkpoint.
+**Edge cases:**
+- `gh` CLI not installed → skip PR creation, tell user to install gh or create PR manually, continue with other ship steps
+- On main branch with changes → warn "you're working directly on main", suggest creating a branch first
+- Push fails (auth, remote) → diagnose error, suggest `/flow:debug`, don't retry blindly
+- Review hasn't been run → suggest `/flow:review` first, let user skip if they choose
+- PR creation fails → do not clear state or archive plan, stop and report the error
+
 ## Steps
 
 ### 1. Enter Ship Mode

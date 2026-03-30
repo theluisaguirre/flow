@@ -1,5 +1,16 @@
 # Vibe Skill
 
+## Contract
+
+**Triggers:** "just build it", "skip the process", "let me vibe", "free-form", or user wants to work without a plan.
+**Inputs:** `.flow/STATE.md` with a current phase. No plan required.
+**Outputs:** Entries appended to `### Vibed` in STATE.md after each commit. Entry SHA logged under `### Vibe Session` for later reconciliation. Mode set to `vibe`.
+**Edge cases:**
+- Switching out of vibe to any other mode → must run exit protocol first (diff from entry SHA, summarize, reconcile with plan if one exists)
+- Entry SHA not found in git history (force-push, rebase) → use oldest available commit on branch, warn user
+- User mentions ending their session → suggest `/flow:pause`, don't force it
+- No commits made during vibe session → skip reconciliation on exit, remove `### Vibe Session` section cleanly
+
 ## On Enter
 
 1. Update STATE.md: set `## Current: Phase {N} — {name} (vibe mode)`

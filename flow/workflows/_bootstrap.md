@@ -1,5 +1,16 @@
 # Flow Bootstrap (internal)
 
+## Contract
+
+**Triggers:** Runs automatically before every Flow skill invocation. Not user-callable.
+**Inputs:** A `.flow/` directory may or may not exist. Git repo expected but not required.
+**Outputs:** Valid `.flow/STATE.md` in canonical format; `### Handoff` consumed and displayed if present.
+**Edge cases:**
+- STATE.md exists but is malformed (missing `## Current:` line) → treat as missing, rebuild from git + `.planning/`
+- No git repo → skip all git commands, set branch to "none", uncommitted to 0
+- `.planning/` doesn't exist → skip GSD migration, build from git history only
+- Detached HEAD → set branch to "detached ({short-sha})", warn user
+
 > **This skill runs automatically before every Flow skill invocation.**
 > Individual skills must NOT duplicate any pre-flight checks — bootstrap handles all of it.
 

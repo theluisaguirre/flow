@@ -1,5 +1,16 @@
 # Flow Plan
 
+## Contract
+
+**Triggers:** "plan this", "let's plan", "design first", "write a plan", or starting a new phase that needs architecture decisions.
+**Inputs:** `.flow/STATE.md` with a current phase. Optionally, existing research or brainstorm notes in `.flow/plans/`.
+**Outputs:** `.flow/plans/{phase-name}.md` with sequenced task checklist. `### Plan` section in STATE.md populated. Mode set to `plan`.
+**Edge cases:**
+- Plan already exists for this phase → ask: revise existing or start new phase
+- User wants to skip planning → suggest `/flow:vibe`
+- Context lost mid-brainstorm (context window reset) → conversation history has the brainstorm notes, resume from there
+- Phase name contains special characters → slugify for filename (spaces to hyphens, lowercase)
+
 ## Steps
 
 ### 1. Set mode to plan

@@ -1,5 +1,15 @@
 # Flow Pause
 
+## Contract
+
+**Triggers:** "I'm done for now", "save progress", "stepping away", "end session", or user mentions stopping.
+**Inputs:** `.flow/STATE.md` with current phase and mode. Git state.
+**Outputs:** `### Handoff` section appended to STATE.md with timestamp, mode, branch, uncommitted count, and plain-language context. Summary printed.
+**Edge cases:**
+- Uncommitted changes exist → ask if user wants to commit first, proceed either way
+- Already has a `### Handoff` section (paused twice without resuming) → replace it, don't stack
+- No meaningful work done since last pause → write handoff anyway with "no changes since last session"
+
 ## Steps
 
 ### 1. Gather current state

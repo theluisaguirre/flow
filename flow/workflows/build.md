@@ -1,5 +1,17 @@
 # Flow Build
 
+## Contract
+
+**Triggers:** "let's build", "start building", "next task", or after plan is approved via `/flow:plan`.
+**Inputs:** `.flow/STATE.md` with at least one unchecked task in `### Plan`. If no plan exists, stops and redirects.
+**Outputs:** Completed tasks marked `[x]` in STATE.md. Git commits after each task. Mode set to `build`.
+**Edge cases:**
+- No plan exists → suggest `/flow:plan` or `/flow:vibe`, don't proceed
+- User requests off-plan work → offer three choices: switch to vibe, add to plan, or do it and log as unplanned
+- Test failure during TDD → switch to `/flow:debug`, return to build after fix
+- All tasks already complete → skip to "all done" message, recommend `/flow:review`
+- `.planning/dev-session.json` doesn't exist → skip session sync, don't error
+
 ## Steps
 
 1. **Enter Build mode.** Update `.flow/STATE.md` header to `## Current: Phase {N} — {name} (build mode)`.

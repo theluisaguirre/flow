@@ -2,6 +2,17 @@
 
 Audit and repair project state. Fix structural issues that confuse agents.
 
+## Contract
+
+**Triggers:** "clean up state", "fix the structure", "something's wrong with flow state", or suggested by other workflows when structural issues detected.
+**Inputs:** `.flow/` directory and optionally `.planning/`. Git state.
+**Outputs:** Numbered issue list, fixes applied (with user approval), corrected STATE.md + ROADMAP.md written. Archived files moved to `.flow/archive/` (never deleted). Summary with fix count and current state.
+**Edge cases:**
+- Ambiguous issue (two phases with same number, different content) → ask user which to keep, don't guess
+- No issues found → report "project is clean", don't create unnecessary files
+- User declines fixes → respect the choice, report what was found but not fixed
+- `.flow/archive/` doesn't exist → create it when first archive is needed
+
 ## Archive Policy
 
 **Flow never deletes project files.** All removals are moves to `.flow/archive/`:

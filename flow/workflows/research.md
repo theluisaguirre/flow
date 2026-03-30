@@ -2,6 +2,16 @@
 
 Investigate the domain before planning. Gather evidence so planning decisions are informed, not guessed.
 
+## Contract
+
+**Triggers:** Called by `/flow:plan` before brainstorming. Also standalone when "I need to understand this first" or "what exists for this".
+**Inputs:** User's description of the phase or feature. Optionally, existing codebase and git history.
+**Outputs:** `.flow/plans/{phase-name}-research.md` with question/finding/implication format. Summary printed with key findings.
+**Edge cases:**
+- No web search available → skip ecosystem/external research, note the gap, rely on codebase and git only
+- Task is trivial (bug fix, typo) → skip research entirely, say so, hand off to brainstorm
+- Research question can't be answered with available tools → state "unknown" and move on, don't block
+
 ## When This Runs
 
 Called automatically by `/flow:plan` before brainstorming. Can also be run standalone when you need to understand a domain before committing to an approach.

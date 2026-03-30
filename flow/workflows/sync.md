@@ -2,6 +2,17 @@
 
 Reconcile `.flow/STATE.md` with git history.
 
+## Contract
+
+**Triggers:** "sync state", "state is out of date", or after vibing, force-pushes, reverts, or when STATE.md feels wrong.
+**Inputs:** `.flow/STATE.md` (may be stale or missing). Git history as source of truth.
+**Outputs:** Updated `.flow/STATE.md` — tasks reconciled against commits, new vibe entries logged, mode preserved. Sync report to stdout.
+**Edge cases:**
+- STATE.md missing entirely → reconstruct from git: infer phase from branch name, build plan from commits (all marked done), set mode to vibe
+- Merge conflict in progress → warn "merge conflict detected, resolve before syncing", stop
+- Git log since last STATE.md update returns nothing → report "no new commits, state unchanged"
+- Task marked done but related files were reverted → uncheck the task, note in report
+
 ## Steps
 
 ### 1. Read current STATE.md

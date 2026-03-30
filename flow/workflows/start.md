@@ -2,6 +2,17 @@
 
 Bootstrap `.flow/` in the current project by scanning existing context.
 
+## Contract
+
+**Triggers:** "set up flow", "init flow", "bootstrap flow", or first time using Flow in a project.
+**Inputs:** A project directory with or without existing `.planning/` state or git history.
+**Outputs:** `.flow/` directory with STATE.md, ROADMAP.md, `plans/`, `done/`. Summary printed showing project name, phase, task count, roadmap size.
+**Edge cases:**
+- `.flow/` already exists with valid state → run sync instead of rebuilding
+- `.flow/` exists but STATE.md missing or corrupt → rebuild STATE.md, preserve other files
+- No git repo, no `.planning/`, no CLAUDE.md → use directory basename as project name, start at Phase 1 with empty plan
+- Structural issues detected during scan → note in summary, suggest `/flow:cleanup`
+
 ## Steps
 
 1. **Check for existing .flow/**

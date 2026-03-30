@@ -2,6 +2,16 @@
 
 Explore the idea collaboratively before committing to a plan. Turn a vague goal into a concrete design through focused conversation.
 
+## Contract
+
+**Triggers:** Called by `/flow:plan` after research. Also standalone on "let's brainstorm", "explore options", or "what are the approaches".
+**Inputs:** Research findings (if available), user's goal description, codebase context.
+**Outputs:** Design summary with approach, key decisions, out-of-scope list, and open questions. Explicit user approval before proceeding.
+**Edge cases:**
+- Only one viable approach exists → present it with reasoning, don't invent bad alternatives
+- User rejects all approaches → ask what's wrong, re-investigate, propose new options
+- User wants to jump straight to building → confirm they're sure, suggest `/flow:vibe` if they want no ceremony
+
 ## When This Runs
 
 Called automatically by `/flow:plan` after research (if research ran) or directly if no research is needed. The goal is a validated design direction before writing tasks.

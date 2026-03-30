@@ -1,5 +1,16 @@
 # Flow Status
 
+## Contract
+
+**Triggers:** "what's the status", "where did I leave off", "what should I do next", or start of a new session.
+**Inputs:** `.flow/STATE.md` must exist. If missing, outputs "Flow not initialized" and stops.
+**Outputs:** 5-line summary to stdout — phase, mode, progress, branch state, recommended action.
+**Edge cases:**
+- STATE.md has `### Handoff` → display handoff context before summary, then remove section
+- `git rev-list @{u}..HEAD` fails (no upstream) → show "?" for ahead count
+- All tasks complete but mode still says "build" → recommend `/flow:review`
+- Uncommitted files in non-vibe mode → append warning to action line
+
 ## 1 — Read State
 
 Read `.flow/STATE.md`. If missing: output `Flow not initialized. Run /flow:start` and stop.

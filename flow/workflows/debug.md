@@ -1,5 +1,16 @@
 # Flow Debug
 
+## Contract
+
+**Triggers:** "something broke", "test failing", "this isn't working", "there's a bug", or redirect from build/ship when tests fail.
+**Inputs:** A symptom — error message, wrong behavior, or failing test. Current mode preserved.
+**Outputs:** Root cause identified, minimal fix applied, commit with `fix:` prefix. `[debugging]` suffix removed from STATE.md mode line on exit.
+**Edge cases:**
+- Three hypotheses all fail → step back, re-examine assumptions, widen investigation scope
+- Fix causes state drift (tasks completed out of order, unplanned files changed) → suggest `/flow:sync`
+- User entered debug from vibe mode → `[debugging]` appends after vibe mode, e.g. `(vibe mode) [debugging]`
+- No reproducible test case → work from logs and code reading, note that fix is unverified
+
 ## On Enter
 
 Update `.flow/STATE.md`: append `[debugging]` to the current mode line.
