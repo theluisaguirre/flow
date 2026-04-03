@@ -15,6 +15,8 @@ const PKG_ROOT = path.resolve(__dirname, '..');
 const COMMANDS_SRC = path.join(PKG_ROOT, 'commands', 'flow');
 const FLOW_SRC = path.join(PKG_ROOT, 'flow');
 const HOOK_SRC = path.join(PKG_ROOT, 'hooks', 'flow-startup.js');
+const VIBE_GUARD_SRC = path.join(PKG_ROOT, 'hooks', 'flow-vibe-guard.js');
+const SYNC_GUARD_SRC = path.join(PKG_ROOT, 'hooks', 'flow-sync-guard.js');
 
 const BOLD = '\x1b[1m';
 const GREEN = '\x1b[32m';
@@ -62,7 +64,7 @@ function registerHook(settingsPath) {
   if (!settings.hooks) settings.hooks = {};
   if (!settings.hooks.PreToolUse) settings.hooks.PreToolUse = [];
 
-  const hookEntry = {
+  const startupEntry = {
     matcher: 'Bash',
     hooks: [{
       type: 'command',
@@ -71,15 +73,39 @@ function registerHook(settingsPath) {
     }]
   };
 
-  const existing = settings.hooks.PreToolUse.find(
+  const vibeGuardEntry = {
+    matcher: 'Skill',
+    hooks: [{
+      type: 'command',
+      command: `node ${path.join(HOOKS_DEST, 'hooks', 'flow-vibe-guard.js')}`
+    }]
+  };
+
+  const syncGuardEntry = {
+    matcher: 'Skill',
+    hooks: [{
+      type: 'command',
+      command: `node ${path.join(HOOKS_DEST, 'hooks', 'flow-sync-guard.js')}`
+    }]
+  };
+
+  const hasStartup = settings.hooks.PreToolUse.find(
     h => h.hooks?.some(hh => hh.command?.includes('flow-startup.js'))
   );
+  const hasVibeGuard = settings.hooks.PreToolUse.find(
+    h => h.hooks?.some(hh => hh.command?.includes('flow-vibe-guard.js'))
+  );
+  const hasSyncGuard = settings.hooks.PreToolUse.find(
+    h => h.hooks?.some(hh => hh.command?.includes('flow-sync-guard.js'))
+  );
 
-  if (existing) return false;
+  let added = false;
+  if (!hasStartup) { settings.hooks.PreToolUse.push(startupEntry); added = true; }
+  if (!hasVibeGuard) { settings.hooks.PreToolUse.push(vibeGuardEntry); added = true; }
+  if (!hasSyncGuard) { settings.hooks.PreToolUse.push(syncGuardEntry); added = true; }
 
-  settings.hooks.PreToolUse.push(hookEntry);
   fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2));
-  return true;
+  return added;
 }
 
 function getVersion() {
@@ -107,18 +133,24 @@ function uninstall() {
   }
 
   const hooksDir = path.join(HOOKS_DEST, 'hooks');
-  const hookFile = path.join(hooksDir, 'flow-startup.js');
-  if (fs.existsSync(hookFile)) {
-    fs.unlinkSync(hookFile);
-    removed++;
+  for (const hookFile of ['flow-startup.js', 'flow-vibe-guard.js', 'flow-sync-guard.js']) {
+    const p = path.join(hooksDir, hookFile);
+    if (fs.existsSync(p)) {
+      fs.unlinkSync(p);
+      removed++;
+    }
   }
 
-  // Remove hook from settings
+  // Remove hooks from settings
   try {
     const settings = JSON.parse(fs.readFileSync(SETTINGS_PATH, 'utf-8'));
     if (settings.hooks?.PreToolUse) {
       settings.hooks.PreToolUse = settings.hooks.PreToolUse.filter(
-        h => !h.hooks?.some(hh => hh.command?.includes('flow-startup.js'))
+        h => !h.hooks?.some(hh =>
+          hh.command?.includes('flow-startup.js') ||
+          hh.command?.includes('flow-vibe-guard.js') ||
+          hh.command?.includes('flow-sync-guard.js')
+        )
       );
       if (settings.hooks.PreToolUse.length === 0) delete settings.hooks.PreToolUse;
       if (Object.keys(settings.hooks).length === 0) delete settings.hooks;
@@ -168,7 +200,9 @@ success(`${flowCount} workflow files → ~/.claude/flow/`);
 const hooksDestDir = path.join(HOOKS_DEST, 'hooks');
 fs.mkdirSync(hooksDestDir, { recursive: true });
 fs.copyFileSync(HOOK_SRC, path.join(hooksDestDir, 'flow-startup.js'));
-success('Startup hook → ~/.claude/hooks/flow-startup.js');
+fs.copyFileSync(VIBE_GUARD_SRC, path.join(hooksDestDir, 'flow-vibe-guard.js'));
+fs.copyFileSync(SYNC_GUARD_SRC, path.join(hooksDestDir, 'flow-sync-guard.js'));
+success('Hooks → ~/.claude/hooks/ (startup, vibe-guard, sync-guard)');
 
 // 4. Register hook in settings
 const hookRegistered = registerHook(SETTINGS_PATH);
