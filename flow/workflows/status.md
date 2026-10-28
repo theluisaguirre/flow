@@ -45,6 +45,7 @@ last_commit=$(git log -1 --format='%ar' 2>/dev/null || echo "never")
 | Build | done<total | "Continue building — next task pending" |
 | Build | done=total | "All tasks done — /flow:review" |
 | Vibe | — | "Vibing freely. /flow:sync when ready" |
+| Spike | — | "Spiking: {question}. Answer it, then /flow:plan" |
 | Review | — | "Verify work, /flow:ship when satisfied" |
 | Ship | — | "Push, create PR, close phase" |
 | Any | Has ### Handoff | "Resuming — pick up {working on} or /flow:status for full overview" |

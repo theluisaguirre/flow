@@ -62,7 +62,7 @@ Scan everything available:
 - Project name (PROJECT.md title → CLAUDE.md title → directory basename)
 - All phases with their true status (check for VERIFICATION files, completed tasks, git evidence)
 - Current phase number (dev-session.json → STATE.md → infer from branch/commits)
-- Current mode (dev-session step → infer: has plan but no tasks done = plan, has tasks in progress = build, recent vibe: commits = vibe)
+- Current mode (dev-session step → infer: has plan but no tasks done = plan, has tasks in progress = build, recent vibe: commits = vibe, on a spike/* branch = spike)
 - Dirty file count
 - Branch info (name, ahead/behind, is main)
 
@@ -105,6 +105,7 @@ Create the directory structure and write corrected state:
 ├── STATE.md      ← current phase, mode, tasks, vibed, decisions
 ├── ROADMAP.md    ← corrected phase list with true completion status
 ├── plans/        ← copy active plan files
+├── spikes/       ← throwaway-prototype notes (question → answer); code is never kept
 ├── done/         ← completed phase plans
 └── archive/      ← anything removed or superseded goes here
 ```

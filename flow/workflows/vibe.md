@@ -30,6 +30,7 @@
 - Suggest a checkpoint when changes pile up (>5 files touched or >30 min elapsed). Suggestion only — don't block.
 - Offer TDD if relevant, never require it.
 - Use commit prefix: `vibe: {description}`
+- Follow the code-health Principles in `~/.claude/flow/references/refactor-checks.md` (tokens, module entry points, no third copy, no leftover debug code) without announcing it. Zero ceremony, same habits.
 - Suggest `/flow:pause` if the user mentions ending their session.
 
 ### DO NOT

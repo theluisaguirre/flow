@@ -18,15 +18,24 @@ Called automatically by `/flow:plan` after research (if research ran) or directl
 
 ## Process
 
-### 1. Understand the goal
+### 1. Understand the goal — interview
 
-Start with what's known — research findings (if available), user's description, existing code context. Then ask clarifying questions to fill gaps.
+Start with what's known: research findings (if any), the user's description, `CLAUDE.md`,
+`.flow/STATE.md`, existing code. **Read those before asking anything** — asking what's already
+written down wastes the user's time.
 
-**Rules for questions:**
-- One question at a time. Don't overwhelm.
-- Prefer multiple choice when possible — easier to answer than open-ended.
-- Focus on: purpose, constraints, success criteria, scope boundaries.
-- Stop asking when you have enough to propose approaches (usually 2-4 questions).
+Then interview to fill the gaps. Full question bank and rules:
+`~/.claude/flow/references/interview.md`.
+
+Short version: one question per message, offer choices, lead with your best guess, 3–6 questions,
+stop when you can state the thing back in one sentence and the user would agree. Cover at minimum: what it is
+and for whom · what it is explicitly **not** · v1 vs later · how we'll know it works · anything that
+must not break.
+
+End the interview by reading it back and asking "Right?" — then record the answers in the design
+summary. The "how will we know it works" answer becomes the proof tags in `plan.md` §5.
+
+**Skip the interview** for bug fixes, obvious-shape tasks, or when the brief is already written.
 
 ### 2. Propose approaches
 

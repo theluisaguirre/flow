@@ -78,6 +78,10 @@ After confirmed success:
 
 > Shipped! PR: {url}. Phase {N} done. Next: {next phase name, or "milestone complete"}.
 
+**Launch gate.** If this phase ships a public release of an app that has a website (version bump, App Store/Gumroad release), say: "This is a public release. Run your launch checklist (site matches the shipped features, stale facts refreshed, sitemap resubmitted)?" If the user defers it, record it wherever dated work lives for them.
+
+**Refactor gate.** If `.flow/STATE.md` has a `Refactor recommended:` line from Review, or this is the 3rd phase shipped since the last `### Refactor` entry, say: "Code health is due. `/flow:refactor` now, between phases, is the cheapest time. Run it, or plan the next phase first?" Clear the `Refactor recommended:` line once the refactor runs.
+
 ## Language Guide
 
 Always use these plain-language phrases, with the technical term in parentheses:

@@ -65,6 +65,18 @@ Once root cause confirmed:
 
 ### 6. Update State
 
+**Log the fix.** Append an entry to `.flow/FIXLOG.md` (create it if absent):
+
+```markdown
+## {date} — {one-line symptom}
+- **Cause:** {root cause, one line}
+- **Fix:** {what changed, file:line}
+- **Rule:** {the generalisation — what to do differently so this class of bug doesn't recur}
+```
+
+The `Rule:` line is the point. A fix teaches nothing without it. If three entries land on the same
+file or module, say so: that area needs restructuring, not another patch — raise it for `/flow:refactor`.
+
 Remove `[debugging]` from STATE.md mode line.
 If the fix touched planned tasks, update their status.
 If the fix caused state drift (tasks completed out of order, files changed that don't match plan), suggest `/flow:sync` to reconcile.

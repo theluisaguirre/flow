@@ -23,11 +23,14 @@
    - Which are missing (`- [ ]`)?
    - Any unplanned additions from Vibed?
    - Does the work achieve the phase goal?
+   - **Did each done task meet its own proof tag?** `[test]` ran green, `[snap]` was compared, `[manual]` was actually tried. A ticked task with an unmet tag is not done.
 
    If tasks are missing, ask:
    > {N} planned tasks incomplete. Skip them and proceed, or go back to Build?
 
-4. **Stage 2 — Code quality.** Run tests, verify the build compiles cleanly, and check for obvious issues (dead code, missing error handling, broken imports). Confirm output of each verification command before reporting results.
+4. **Stage 2 — Code quality.** Run tests, verify the build compiles cleanly, and check for obvious issues (dead code, missing error handling, broken imports). Confirm output of each verification command before reporting results. For any visible surface changed this phase, review it against `~/.claude/flow/references/verify-checks.md` (light + dark, the three commonly-missed defects, valid-snapshot traps).
+
+   **Health check (phase diff only).** Run the mechanical checks from `~/.claude/flow/references/refactor-checks.md` (A styles, D slop, E broken) against the files changed this phase, plus a B boundary count for any feature module touched. Report one line per category: `Styles: 3 literal values outside tokens · Slop: 1 debug print · Boundaries: Canvas→BrushStudio 92 symbols`. Fix small items in Build now; anything structural or project-wide goes to `/flow:refactor` after ship.
 
 5. **Summary report.** Print:
    ```
@@ -38,10 +41,13 @@
    Build: clean/errors
    Issues: list or "none"
    Structural: clean / issues found
+   Code health: clean / N items (styles n, slop n, boundaries n)
+   Visual: N surfaces reviewed (light+dark) / not applicable
    → Ready to ship / Needs fixes
    ```
 
    If structural issues detected (orphaned files, state inconsistencies): suggest `/flow:cleanup` before shipping.
+   If code health has any boundary leak or more than ~10 mechanical items: write `Refactor recommended: {summary}` into `.flow/STATE.md` under `### Decisions`, so Ship can recommend `/flow:refactor` next.
 
 6. **Next step.** If ready:
    > Looking good. `/flow:ship` when ready.

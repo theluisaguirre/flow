@@ -97,6 +97,7 @@ If `.planning/dev-session.json` exists, update its `step` field to match the mod
 - plan mode → step: "plan"
 - build mode → step: "build"
 - vibe mode → step: "vibe"
+- spike mode → step: "spike"
 - review mode → step: "review"
 
 This keeps the Dev Mode toolbar in sync.

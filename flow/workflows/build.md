@@ -24,6 +24,9 @@
 3. **Execute tasks sequentially.** For each unchecked task:
    - Announce: `> Building: {task description}`
    - Implement the task. Use TDD when appropriate (write test, make it pass, refactor). If tests fail repeatedly, switch to `/flow:debug` to investigate systematically.
+   - **Code-health rules** (`~/.claude/flow/references/refactor-checks.md`, Principles): styles only from the tokens file; new feature code goes in its module and the app talks to its entry point only; don't copy a block a third time, merge it; no debug prints, dead code or commented-out code left behind. Prevention here is cheaper than `/flow:refactor` later.
+   - **Verify before ticking.** If the task changes a visible surface, verify it per `~/.claude/flow/references/verify-checks.md` — launch it, look at it in light and dark, confirm it matches the task. Code that compiles is not evidence. If it has no visible surface, its `[test]` proof must run green.
+   - **Three-attempt cap.** If a task fails three times, stop. Leave it `- [ ]`, append `blocked: {one-line reason}` after the task text, and move to the next task. Don't grind.
    - Mark the task `- [x]` in `.flow/STATE.md`.
    - **Commit checkpoint:** After completing each task (or when changed files pile up), ask:
      > Checkpoint — commit these changes? Suggest a descriptive message summarizing what was built.
@@ -35,7 +38,7 @@
    > b) **Add to plan** — append it and do it in order
    > c) **Just do it** — implement now, log as unplanned in STATE.md
 
-5. **All tasks complete.** When every task in the plan is checked, respond:
+5. **All tasks complete.** When every task in the plan is checked (blocked tasks excepted — list any `blocked:` tasks and what each needs), respond:
    > All done! /flow:review to verify, /flow:ship to ship, /flow:vibe to keep tinkering, or /flow:pause to save progress and stop.
 
 ## Recommended Next Step

@@ -20,6 +20,10 @@ Called automatically by `/flow:plan` before brainstorming. Can also be run stand
 
 ### 1. Define what to investigate
 
+**If the goal is vague, interview first** (`~/.claude/flow/references/interview.md`) — you can't
+research "make it better". A few questions about what it is, who it's for and what it is *not*
+usually collapses five research questions into two. Skip when the ask is already concrete.
+
 From the user's description of the phase or feature, identify 3-5 research questions. These typically fall into:
 
 - **Ecosystem:** What libraries, tools, or APIs exist for this? What do others use?
@@ -37,12 +41,14 @@ Present the questions to the user:
 
 ### 2. Investigate
 
-For each question, use the tools available:
+Sources: the codebase (read files, grep patterns, existing implementations), git history (what was
+tried and reverted), the web (docs, packages, GitHub), the file system (configs, lock files,
+dependencies that constrain choices).
 
-- **Codebase:** Read relevant files, grep for patterns, check existing implementations
-- **Git history:** What's been tried before? Any reverted approaches?
-- **Web search:** Check documentation, npm/PyPI packages, Stack Overflow, GitHub repos
-- **File system:** Check for config files, lock files, existing dependencies that constrain choices
+**Fan out when there are 3+ independent questions.** Launch one subagent per track, in a single
+message so they run in parallel. Give each the same brief: the question, which sources to use, "tag
+every claim `[V]`/`[K]`/`[U]`", and "return under 200 words". Tracks that depend on each other stay
+sequential.
 
 Spend no more than 2-3 minutes per question. The goal is informed planning, not exhaustive research.
 
@@ -50,12 +56,22 @@ Spend no more than 2-3 minutes per question. The goal is informed planning, not 
 
 Write a concise research summary. For each question:
 
+Tag every claim so the plan knows what it's standing on:
+
+- **`[V]` Verified** — checked directly this session (ran it, read the file, fetched the page). Say where.
+- **`[K]` Known** — standard knowledge, not checked here. Fine for background, not for load-bearing decisions.
+- **`[U]` Unverified** — assumption, inference or something a source asserted but nobody confirmed.
+
 ```
 ### {Question}
-**Finding:** {1-2 sentence answer}
+**Finding:** {1-2 sentence answer} `[V]`
 **Evidence:** {what you found and where}
 **Implication:** {how this affects the plan}
 ```
+
+**Every `[U]` a decision rests on becomes a spike question.** List them at the end under
+`## Unverified — needs a spike`. Don't plan on top of an assumption; `/flow:spike` is cheaper than
+building the wrong thing.
 
 ### 4. Save research
 
